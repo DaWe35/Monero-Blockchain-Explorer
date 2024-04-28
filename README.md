@@ -16,8 +16,6 @@ nano .env
 sudo docker compose up -d
 ```
 
-If you want to collect forward lookup data, you need to enter start lookup.py manually. Enter the container's shell (commands below) and hit `python3 lookup.py`
-
 ## Stop docker
 ```
 sudo docker compose down
