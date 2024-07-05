@@ -87,17 +87,17 @@ while True:
     if block['status'] != 'fail':        
         log.info(f"Downloading {len(urls)} transactions for {concurrency} blocks from height {block_height} ({percentage(block_height, block['data']['current_height'])})")
         print(f"Downloading {len(urls)} transactions for {concurrency} blocks from height {block_height} ({percentage(block_height, block['data']['current_height'])})")
-    responses = grequests.map(grequests.get(u) for u in urls)
+        responses = grequests.map(grequests.get(u) for u in urls)
 
-    in_results = set()
-    for api_result_tx in responses:
-        result_tx = api_result_tx.json()
-        tx_hash = result_tx['data']['tx_hash']
-        if result_tx['data']['inputs'] is not None:
-            for ins in result_tx['data']['inputs']:
-                for mixin in ins['mixins']:
-                    in_results.add((mixin['public_key'], tx_hash))
+        in_results = set()
+        for api_result_tx in responses:
+            result_tx = api_result_tx.json()
+            tx_hash = result_tx['data']['tx_hash']
+            if result_tx['data']['inputs'] is not None:
+                for ins in result_tx['data']['inputs']:
+                    for mixin in ins['mixins']:
+                        in_results.add((mixin['public_key'], tx_hash))
 
-    insert(db_connection, in_results)
-    block_height += concurrency
-    write_height(block_height)
+        insert(db_connection, in_results)
+        block_height += concurrency
+        write_height(block_height)
