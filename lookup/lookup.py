@@ -84,7 +84,7 @@ while True:
             for tx in block['data']['txs']:
                 urls.append(f"{API_HOST}/transaction/{tx['tx_hash']}")
     
-    if block['status'] !== 'fail':        
+    if block['status'] != 'fail':        
         log.info(f"Downloading {len(urls)} transactions for {concurrency} blocks from height {block_height} ({percentage(block_height, block['data']['current_height'])})")
         print(f"Downloading {len(urls)} transactions for {concurrency} blocks from height {block_height} ({percentage(block_height, block['data']['current_height'])})")
     responses = grequests.map(grequests.get(u) for u in urls)
